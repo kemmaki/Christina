@@ -5,110 +5,109 @@
 <title>Blow Out the Candles</title>
 <style>
     body {
-        font-family: Arial, sans-serif;
-        background: radial-gradient(circle at top, #555, #111);
+        margin: 0;
+        padding-top: 40px;
+        font-family: "Trebuchet MS", sans-serif;
+        background: linear-gradient(#2b1055, #140a2b);
         color: white;
         text-align: center;
-        padding-top: 30px;
     }
 
-    h1 { margin-bottom: 5px; }
+    h1 {
+        margin-bottom: 8px;
+    }
 
+    /* ===== Cake ===== */
     #cake {
         position: relative;
         width: 420px;
-        height: 240px;
+        height: 220px;
         margin: 40px auto 0;
-        background: linear-gradient(#f7b27a, #c96a28);
-        border-radius: 20px;
+        background: linear-gradient(#ffb347, #ff8c42);
+        border-radius: 25px;
         box-shadow:
-            inset 0 10px 0 rgba(255,255,255,0.2),
-            inset 0 -15px 0 rgba(0,0,0,0.3),
-            0 20px 30px rgba(0,0,0,0.7);
+            inset 0 12px rgba(255,255,255,0.25),
+            inset 0 -18px rgba(0,0,0,0.25),
+            0 25px 40px rgba(0,0,0,0.6);
         overflow: hidden;
     }
 
+    /* Frosting top */
     #cake::before {
         content: "";
         position: absolute;
         top: 0;
+        left: 0;
         width: 100%;
         height: 55px;
-        background: linear-gradient(#fff, #ffe4ec);
-        border-radius: 20px 20px 10px 10px;
+        background: linear-gradient(#fff, #ffe6f2);
+        border-radius: 25px 25px 12px 12px;
     }
 
+    /* Frosting drips */
     #cake::after {
         content: "";
         position: absolute;
         top: 45px;
         width: 100%;
-        height: 40px;
+        height: 45px;
         background:
-            radial-gradient(circle at 10% 0, #ffe4ec 20px, transparent 21px),
-            radial-gradient(circle at 35% 0, #ffe4ec 25px, transparent 26px),
-            radial-gradient(circle at 60% 0, #ffe4ec 18px, transparent 19px),
-            radial-gradient(circle at 85% 0, #ffe4ec 22px, transparent 23px);
+            radial-gradient(circle at 8% 0, #ffe6f2 20px, transparent 21px),
+            radial-gradient(circle at 28% 0, #ffe6f2 28px, transparent 29px),
+            radial-gradient(circle at 52% 0, #ffe6f2 18px, transparent 19px),
+            radial-gradient(circle at 75% 0, #ffe6f2 25px, transparent 26px),
+            radial-gradient(circle at 92% 0, #ffe6f2 20px, transparent 21px);
     }
 
-    /* Candle holder */
+    /* ===== Candles ===== */
     .candles {
         position: absolute;
-        top: -20px;
+        top: -22px;
         width: 100%;
         display: flex;
         justify-content: center;
         gap: 14px;
-        z-index: 10;
-        flex-wrap: wrap;
-        padding: 0 10px;
+        z-index: 5;
     }
 
     .candle {
         position: relative;
         width: 18px;
-        height: 70px;
-        background: repeating-linear-gradient(
-            45deg,
-            white,
-            white 5px,
-            pink 5px,
-            pink 10px
-        );
-        border-radius: 5px;
+        height: 72px;
+        background: linear-gradient(#ffffff, #ffd6e8);
+        border-radius: 9px;
+        box-shadow:
+            inset -2px 0 rgba(255,255,255,0.7),
+            inset 2px 0 rgba(0,0,0,0.15);
         cursor: pointer;
     }
 
-    /* PERFECTLY CENTERED FLAME */
+    .wick {
+        position: absolute;
+        top: -4px;
+        left: 50%;
+        width: 2px;
+        height: 6px;
+        background: #333;
+        transform: translateX(-50%);
+    }
+
     .flame {
         position: absolute;
         bottom: 100%;
         left: 50%;
+        width: 16px;
+        height: 24px;
         transform: translateX(-50%);
-        width: 14px;
-        height: 20px;
-        background: radial-gradient(circle at bottom, yellow, orange, red);
+        background: radial-gradient(circle at bottom, #fff176, #ff9800, #ff5722);
         border-radius: 50%;
-        box-shadow: 0 0 15px orange;
-        animation: flicker 0.12s infinite;
-        pointer-events: none;
+        filter: drop-shadow(0 0 12px orange);
+        animation: sway 0.15s infinite alternate;
     }
 
-    @keyframes flicker {
-        0% { transform: translateX(-50%) scale(1); }
-        50% { transform: translateX(-50%) scale(1.2); }
-        100% { transform: translateX(-50%) scale(1); }
-    }
-
-    .wax {
-        position: absolute;
-        bottom: -10px;
-        left: 4px;
-        width: 10px;
-        height: 0;
-        background: #fff;
-        border-radius: 5px;
-        transition: height 2s linear;
+    @keyframes sway {
+        from { transform: translateX(-50%) rotate(-2deg) scale(1); }
+        to   { transform: translateX(-50%) rotate(2deg) scale(1.1); }
     }
 
     .smoke {
@@ -117,7 +116,7 @@
         left: 50%;
         width: 20px;
         height: 20px;
-        background: rgba(200,200,200,0.6);
+        background: rgba(220,220,220,0.6);
         border-radius: 50%;
         transform: translateX(-50%);
         animation: smoke 1.5s forwards;
@@ -125,30 +124,31 @@
 
     @keyframes smoke {
         from { opacity: 1; transform: translateX(-50%) scale(0.6); }
-        to { opacity: 0; transform: translateX(-50%) translateY(-40px) scale(1.5); }
+        to   { opacity: 0; transform: translateX(-50%) translateY(-45px) scale(1.5); }
     }
 
     .out .flame { display: none; }
 
+    /* Plate */
     #plate {
         width: 480px;
-        height: 30px;
-        background: #eee;
+        height: 28px;
+        background: linear-gradient(#f5f5f5, #ccc);
         border-radius: 50%;
-        margin: 10px auto;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+        margin: 12px auto;
+        box-shadow: 0 12px 20px rgba(0,0,0,0.6);
     }
 
     #message {
+        margin-top: 18px;
         font-size: 24px;
-        margin-top: 20px;
     }
 </style>
 </head>
 <body>
 
-<h1>🎂 Blow Out the Candles!</h1>
-<p>Blow into your mic or click the candles</p>
+<h1>🎂 Blow Out the Candles</h1>
+<p>Click the candles to make a wish ✨</p>
 
 <div id="cake">
     <div class="candles" id="candles"></div>
@@ -158,15 +158,19 @@
 <div id="message"></div>
 
 <script>
-const age = Math.min(parseInt(prompt("How old are you? 🎉")) || 5, 30);
-const candleHolder = document.getElementById("candles");
+const candleCount = 7;
+const holder = document.getElementById("candles");
 const message = document.getElementById("message");
 
-for (let i = 0; i < age; i++) {
+for (let i = 0; i < candleCount; i++) {
     const candle = document.createElement("div");
     candle.className = "candle";
-    candle.innerHTML = `<div class="flame"></div><div class="wax"></div>`;
-    candleHolder.appendChild(candle);
+    candle.innerHTML = `
+        <div class="wick"></div>
+        <div class="flame"></div>
+    `;
+    holder.appendChild(candle);
+
     candle.addEventListener("click", () => blowOut(candle));
 }
 
@@ -177,39 +181,17 @@ function blowOut(candle) {
     const smoke = document.createElement("div");
     smoke.className = "smoke";
     candle.appendChild(smoke);
-
-    candle.querySelector(".wax").style.height = "20px";
     setTimeout(() => smoke.remove(), 1500);
+
     checkWin();
 }
 
 function checkWin() {
     const candles = document.querySelectorAll(".candle");
     if ([...candles].every(c => c.classList.contains("out"))) {
-        message.textContent = "🎉 Happy Birthday!!! 🎉";
+        message.textContent = "🎉 Wish granted! Happy Birthday! 🎉";
     }
 }
-
-/* Microphone blowing */
-navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-    const audioContext = new AudioContext();
-    const mic = audioContext.createMediaStreamSource(stream);
-    const analyser = audioContext.createAnalyser();
-    mic.connect(analyser);
-    const data = new Uint8Array(analyser.frequencyBinCount);
-
-    function detectBlow() {
-        analyser.getByteFrequencyData(data);
-        const volume = data.reduce((a, b) => a + b) / data.length;
-        if (volume > 40) {
-            document.querySelectorAll(".candle:not(.out)").forEach(c => {
-                if (Math.random() > 0.6) blowOut(c);
-            });
-        }
-        requestAnimationFrame(detectBlow);
-    }
-    detectBlow();
-});
 </script>
 
 </body>
