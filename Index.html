@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Blow Out the Candles</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #222;
+        color: white;
+        text-align: center;
+        padding-top: 40px;
+    }
+
+    h1 {
+        margin-bottom: 10px;
+    }
+
+    #cake {
+        position: relative;
+        width: 400px;
+        height: 200px;
+        background: #d2691e;
+        border-radius: 20px;
+        margin: 40px auto;
+        padding-top: 20px;
+    }
+
+    .candle {
+        position: relative;
+        display: inline-block;
+        width: 20px;
+        height: 80px;
+        background: white;
+        margin: 0 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .flame {
+        position: absolute;
+        top: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 14px;
+        height: 20px;
+        background: orange;
+        border-radius: 50% 50% 50% 50%;
+        box-shadow: 0 0 15px orange;
+        animation: flicker 0.15s infinite;
+    }
+
+    @keyframes flicker {
+        0% { transform: translateX(-50%) scale(1); }
+        50% { transform: translateX(-50%) scale(1.1); }
+        100% { transform: translateX(-50%) scale(1); }
+    }
+
+    .out .flame {
+        display: none;
+    }
+
+    #message {
+        font-size: 24px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<h1>🎂 Blow Out the Candles!</h1>
+<p>Click each candle to blow it out</p>
+
+<div id="cake">
+    <div class="candle"><div class="flame"></div></div>
+    <div class="candle"><div class="flame"></div></div>
+    <div class="candle"><div class="flame"></div></div>
+    <div class="candle"><div class="flame"></div></div>
+    <div class="candle"><div class="flame"></div></div>
+</div>
+
+<div id="message"></div>
+
+<script>
+    const candles = document.querySelectorAll(".candle");
+    const message = document.getElementById("message");
+
+    candles.forEach(candle => {
+        candle.addEventListener("click", () => {
+            if (!candle.classList.contains("out")) {
+                candle.classList.add("out");
+                checkWin();
+            }
+        });
+    });
+
+    function checkWin() {
+        const allOut = [...candles].every(c => c.classList.contains("out"));
+        if (allOut) {
+            message.textContent = "🎉 Happy Birthday! All candles are out!";
+        }
+    }
+</script>
+
+</body>
+</html>
