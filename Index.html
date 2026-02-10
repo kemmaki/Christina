@@ -51,15 +51,17 @@
             radial-gradient(circle at 85% 0, #ffe4ec 22px, transparent 23px);
     }
 
+    /* Candle holder */
     .candles {
         position: absolute;
-        top: -15px;
+        top: -20px;
         width: 100%;
         display: flex;
         justify-content: center;
-        gap: 12px;
+        gap: 14px;
         z-index: 10;
         flex-wrap: wrap;
+        padding: 0 10px;
     }
 
     .candle {
@@ -74,6 +76,28 @@
             pink 10px
         );
         border-radius: 5px;
+        cursor: pointer;
+    }
+
+    /* PERFECTLY CENTERED FLAME */
+    .flame {
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 14px;
+        height: 20px;
+        background: radial-gradient(circle at bottom, yellow, orange, red);
+        border-radius: 50%;
+        box-shadow: 0 0 15px orange;
+        animation: flicker 0.12s infinite;
+        pointer-events: none;
+    }
+
+    @keyframes flicker {
+        0% { transform: translateX(-50%) scale(1); }
+        50% { transform: translateX(-50%) scale(1.2); }
+        100% { transform: translateX(-50%) scale(1); }
     }
 
     .wax {
@@ -87,39 +111,21 @@
         transition: height 2s linear;
     }
 
-    .flame {
-        position: absolute;
-        top: -22px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 14px;
-        height: 20px;
-        background: radial-gradient(circle at bottom, yellow, orange, red);
-        border-radius: 50%;
-        box-shadow: 0 0 15px orange;
-        animation: flicker 0.12s infinite;
-    }
-
-    @keyframes flicker {
-        0% { transform: translateX(-50%) scale(1); }
-        50% { transform: translateX(-50%) scale(1.2); }
-        100% { transform: translateX(-50%) scale(1); }
-    }
-
     .smoke {
         position: absolute;
-        top: -30px;
+        bottom: 100%;
         left: 50%;
         width: 20px;
         height: 20px;
         background: rgba(200,200,200,0.6);
         border-radius: 50%;
+        transform: translateX(-50%);
         animation: smoke 1.5s forwards;
     }
 
     @keyframes smoke {
-        from { transform: translateX(-50%) scale(0.5); opacity: 1; }
-        to { transform: translateX(-50%) translateY(-40px) scale(1.5); opacity: 0; }
+        from { opacity: 1; transform: translateX(-50%) scale(0.6); }
+        to { opacity: 0; transform: translateX(-50%) translateY(-40px) scale(1.5); }
     }
 
     .out .flame { display: none; }
@@ -161,7 +167,6 @@ for (let i = 0; i < age; i++) {
     candle.className = "candle";
     candle.innerHTML = `<div class="flame"></div><div class="wax"></div>`;
     candleHolder.appendChild(candle);
-
     candle.addEventListener("click", () => blowOut(candle));
 }
 
@@ -180,8 +185,7 @@ function blowOut(candle) {
 
 function checkWin() {
     const candles = document.querySelectorAll(".candle");
-    const allOut = [...candles].every(c => c.classList.contains("out"));
-    if (allOut) {
+    if ([...candles].every(c => c.classList.contains("out"))) {
         message.textContent = "🎉 Happy Birthday!!! 🎉";
     }
 }
@@ -197,7 +201,6 @@ navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
     function detectBlow() {
         analyser.getByteFrequencyData(data);
         const volume = data.reduce((a, b) => a + b) / data.length;
-
         if (volume > 40) {
             document.querySelectorAll(".candle:not(.out)").forEach(c => {
                 if (Math.random() > 0.6) blowOut(c);
