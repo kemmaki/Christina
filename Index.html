@@ -6,90 +6,66 @@
 <style>
     body {
         font-family: Arial, sans-serif;
-        background: radial-gradient(circle at top, #444, #111);
+        background: radial-gradient(circle at top, #555, #111);
         color: white;
         text-align: center;
-        padding-top: 40px;
+        padding-top: 30px;
     }
 
-    h1 {
-        margin-bottom: 10px;
-    }
+    h1 { margin-bottom: 5px; }
 
-    /* Cake plate */
-    #plate {
-        width: 460px;
-        height: 30px;
-        background: #eee;
-        border-radius: 50%;
-        margin: 0 auto;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.6);
-    }
-
-    /* Cake body */
     #cake {
         position: relative;
-        width: 400px;
-        height: 220px;
-        margin: 0 auto;
-        background: linear-gradient(#f4a460, #d2691e);
+        width: 420px;
+        height: 240px;
+        margin: 40px auto 0;
+        background: linear-gradient(#f7b27a, #c96a28);
         border-radius: 20px;
-        box-shadow: inset 0 -10px 0 rgba(0,0,0,0.2);
+        box-shadow:
+            inset 0 10px 0 rgba(255,255,255,0.2),
+            inset 0 -15px 0 rgba(0,0,0,0.3),
+            0 20px 30px rgba(0,0,0,0.7);
         overflow: hidden;
     }
 
-    /* Frosting top */
     #cake::before {
         content: "";
         position: absolute;
         top: 0;
-        left: 0;
         width: 100%;
-        height: 50px;
-        background: #fff0f5;
+        height: 55px;
+        background: linear-gradient(#fff, #ffe4ec);
         border-radius: 20px 20px 10px 10px;
     }
 
-    /* Dripping icing */
     #cake::after {
         content: "";
         position: absolute;
-        top: 40px;
-        left: 0;
+        top: 45px;
         width: 100%;
         height: 40px;
         background:
-            radial-gradient(circle at 10% 0, #fff0f5 20px, transparent 21px),
-            radial-gradient(circle at 30% 0, #fff0f5 25px, transparent 26px),
-            radial-gradient(circle at 55% 0, #fff0f5 18px, transparent 19px),
-            radial-gradient(circle at 80% 0, #fff0f5 22px, transparent 23px);
+            radial-gradient(circle at 10% 0, #ffe4ec 20px, transparent 21px),
+            radial-gradient(circle at 35% 0, #ffe4ec 25px, transparent 26px),
+            radial-gradient(circle at 60% 0, #ffe4ec 18px, transparent 19px),
+            radial-gradient(circle at 85% 0, #ffe4ec 22px, transparent 23px);
     }
 
-    /* Sprinkles */
-    .sprinkle {
-        position: absolute;
-        width: 6px;
-        height: 12px;
-        background: red;
-        border-radius: 3px;
-        transform: rotate(20deg);
-        opacity: 0.9;
-    }
-
-    /* Candles */
     .candles {
         position: absolute;
-        top: -10px;
+        top: -15px;
         width: 100%;
         display: flex;
-        justify-content: space-evenly;
+        justify-content: center;
+        gap: 12px;
         z-index: 10;
+        flex-wrap: wrap;
     }
 
     .candle {
         position: relative;
-        width: 20px;
-        height: 80px;
+        width: 18px;
+        height: 70px;
         background: repeating-linear-gradient(
             45deg,
             white,
@@ -98,30 +74,63 @@
             pink 10px
         );
         border-radius: 5px;
-        cursor: pointer;
+    }
+
+    .wax {
+        position: absolute;
+        bottom: -10px;
+        left: 4px;
+        width: 10px;
+        height: 0;
+        background: #fff;
+        border-radius: 5px;
+        transition: height 2s linear;
     }
 
     .flame {
         position: absolute;
-        top: -25px;
+        top: -22px;
         left: 50%;
         transform: translateX(-50%);
         width: 14px;
         height: 20px;
         background: radial-gradient(circle at bottom, yellow, orange, red);
-        border-radius: 50% 50% 50% 50%;
+        border-radius: 50%;
         box-shadow: 0 0 15px orange;
-        animation: flicker 0.15s infinite;
+        animation: flicker 0.12s infinite;
     }
 
     @keyframes flicker {
         0% { transform: translateX(-50%) scale(1); }
-        50% { transform: translateX(-50%) scale(1.15); }
+        50% { transform: translateX(-50%) scale(1.2); }
         100% { transform: translateX(-50%) scale(1); }
     }
 
-    .out .flame {
-        display: none;
+    .smoke {
+        position: absolute;
+        top: -30px;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        background: rgba(200,200,200,0.6);
+        border-radius: 50%;
+        animation: smoke 1.5s forwards;
+    }
+
+    @keyframes smoke {
+        from { transform: translateX(-50%) scale(0.5); opacity: 1; }
+        to { transform: translateX(-50%) translateY(-40px) scale(1.5); opacity: 0; }
+    }
+
+    .out .flame { display: none; }
+
+    #plate {
+        width: 480px;
+        height: 30px;
+        background: #eee;
+        border-radius: 50%;
+        margin: 10px auto;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.6);
     }
 
     #message {
@@ -133,52 +142,72 @@
 <body>
 
 <h1>🎂 Blow Out the Candles!</h1>
-<p>Click each candle to blow it out</p>
+<p>Blow into your mic or click the candles</p>
 
 <div id="cake">
-    <div class="candles">
-        <div class="candle"><div class="flame"></div></div>
-        <div class="candle"><div class="flame"></div></div>
-        <div class="candle"><div class="flame"></div></div>
-        <div class="candle"><div class="flame"></div></div>
-        <div class="candle"><div class="flame"></div></div>
-    </div>
-
-    <!-- Sprinkles -->
-    <div class="sprinkle" style="top:90px;left:60px;background:#ff69b4"></div>
-    <div class="sprinkle" style="top:120px;left:120px;background:#00ffff"></div>
-    <div class="sprinkle" style="top:150px;left:200px;background:#ffff00"></div>
-    <div class="sprinkle" style="top:110px;left:280px;background:#7fff00"></div>
-    <div class="sprinkle" style="top:160px;left:330px;background:#ff4500"></div>
+    <div class="candles" id="candles"></div>
 </div>
-
 <div id="plate"></div>
 
 <div id="message"></div>
 
 <script>
+const age = Math.min(parseInt(prompt("How old are you? 🎉")) || 5, 30);
+const candleHolder = document.getElementById("candles");
+const message = document.getElementById("message");
+
+for (let i = 0; i < age; i++) {
+    const candle = document.createElement("div");
+    candle.className = "candle";
+    candle.innerHTML = `<div class="flame"></div><div class="wax"></div>`;
+    candleHolder.appendChild(candle);
+
+    candle.addEventListener("click", () => blowOut(candle));
+}
+
+function blowOut(candle) {
+    if (candle.classList.contains("out")) return;
+    candle.classList.add("out");
+
+    const smoke = document.createElement("div");
+    smoke.className = "smoke";
+    candle.appendChild(smoke);
+
+    candle.querySelector(".wax").style.height = "20px";
+    setTimeout(() => smoke.remove(), 1500);
+    checkWin();
+}
+
+function checkWin() {
     const candles = document.querySelectorAll(".candle");
-    const message = document.getElementById("message");
-
-    candles.forEach(candle => {
-        candle.addEventListener("click", () => {
-            if (!candle.classList.contains("out")) {
-                candle.classList.add("out");
-                checkWin();
-            }
-        });
-    });
-
-    function checkWin() {
-        const allOut = [...candles].every(c => c.classList.contains("out"));
-        if (allOut) {
-            message.textContent = "🎉 Happy Birthday! All candles are out!";
-        }
+    const allOut = [...candles].every(c => c.classList.contains("out"));
+    if (allOut) {
+        message.textContent = "🎉 Happy Birthday!!! 🎉";
     }
-</script>
+}
 
-</body>
-</html>
+/* Microphone blowing */
+navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+    const audioContext = new AudioContext();
+    const mic = audioContext.createMediaStreamSource(stream);
+    const analyser = audioContext.createAnalyser();
+    mic.connect(analyser);
+    const data = new Uint8Array(analyser.frequencyBinCount);
+
+    function detectBlow() {
+        analyser.getByteFrequencyData(data);
+        const volume = data.reduce((a, b) => a + b) / data.length;
+
+        if (volume > 40) {
+            document.querySelectorAll(".candle:not(.out)").forEach(c => {
+                if (Math.random() > 0.6) blowOut(c);
+            });
+        }
+        requestAnimationFrame(detectBlow);
+    }
+    detectBlow();
+});
+</script>
 
 </body>
 </html>
