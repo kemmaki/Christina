@@ -41,11 +41,16 @@
         height: 50px;
         border-radius: 12px;
         box-shadow: 0 20px 30px rgba(0,0,0,0.6);
+        transition: transform 0.25s ease;
     }
 
     .layer.top    { background: #ff5f7e; }
     .layer.mid    { background: #ffd166; }
     .layer.bottom { background: #4dd6a5; }
+
+    .bounce {
+        transform: translateY(6px);
+    }
 
     /* ===== Candles ===== */
     .candles {
@@ -75,6 +80,7 @@
         background: #ffbe0b;
         border-radius: 50%;
         animation: pulse 0.3s infinite alternate;
+        transition: transform 0.2s, opacity 0.2s;
     }
 
     @keyframes pulse {
@@ -82,7 +88,15 @@
         to   { transform: translateX(-50%) scale(1.2); }
     }
 
-    .out .flame { display: none; }
+    .weak .flame {
+        transform: translateX(-50%) scale(0.6);
+        opacity: 0.7;
+    }
+
+    .out .flame {
+        opacity: 0;
+        animation: none;
+    }
 
     /* Confetti */
     .confetti {
@@ -94,7 +108,7 @@
 
     @keyframes confetti {
         from { opacity: 1; transform: translateY(0) rotate(0); }
-        to   { opacity: 0; transform: translateY(120px) rotate(360deg); }
+        to   { opacity: 0; transform: translateY(160px) rotate(360deg); }
     }
 
     #message {
@@ -115,7 +129,7 @@
 <body>
 
 <h1>BIRTHDAY TOTEM</h1>
-<p>Blow out the lights — celebrate the year</p>
+<p>Move your mouse like wind — click to blow</p>
 
 <div id="totem">
     <div class="candles" id="candles"></div>
@@ -129,6 +143,7 @@
 <script>
 const candleCount = 7;
 const holder = document.getElementById("candles");
+const layers = document.querySelectorAll(".layer");
 const message = document.getElementById("message");
 
 for (let i = 0; i < candleCount; i++) {
@@ -140,11 +155,39 @@ for (let i = 0; i < candleCount; i++) {
     candle.addEventListener("click", () => blowOut(candle));
 }
 
+/* Mouse wind interaction */
+document.addEventListener("mousemove", e => {
+    const wind = (e.clientX / window.innerWidth - 0.5) * 12;
+    document.querySelectorAll(".flame:not(.out)").forEach(f => {
+        f.style.transform = `translateX(-50%) rotate(${wind}deg)`;
+    });
+});
+
 function blowOut(candle) {
     if (candle.classList.contains("out")) return;
-    candle.classList.add("out");
 
-    for (let i = 0; i < 10; i++) {
+    if (!candle.classList.contains("weak")) {
+        candle.classList.add("weak");
+        bounceCake();
+        return;
+    }
+
+    candle.classList.remove("weak");
+    candle.classList.add("out");
+    bounceCake();
+    burstConfetti(12);
+    checkWin();
+}
+
+function bounceCake() {
+    layers.forEach(l => {
+        l.classList.add("bounce");
+        setTimeout(() => l.classList.remove("bounce"), 200);
+    });
+}
+
+function burstConfetti(amount) {
+    for (let i = 0; i < amount; i++) {
         const c = document.createElement("div");
         c.className = "confetti";
         c.style.left = Math.random() * 100 + "%";
@@ -153,13 +196,12 @@ function blowOut(candle) {
         document.body.appendChild(c);
         setTimeout(() => c.remove(), 1600);
     }
-
-    checkWin();
 }
 
 function checkWin() {
     const candles = document.querySelectorAll(".candle");
     if ([...candles].every(c => c.classList.contains("out"))) {
+        burstConfetti(60);
         message.classList.add("show");
     }
 }
