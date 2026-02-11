@@ -180,15 +180,40 @@ function bounceCake() {
 }
 
 function burstConfetti(amount) {
+    const startY = window.innerHeight / 2; // start halfway up the screen
     for (let i = 0; i < amount; i++) {
+        // Big colorful confetti
         const c = document.createElement("div");
         c.className = "confetti";
-        c.style.left = Math.random() * 100 + "%";
-        c.style.background = `hsl(${Math.random() * 360}, 80%, 60%)`;
-        c.style.width = (6 + Math.random()*6) + "px";
-        c.style.height = (8 + Math.random()*8) + "px";
+        const size = 6 + Math.random()*8;
+        c.style.width = size + "px";
+        c.style.height = size + "px";
+        c.style.background = `hsl(${Math.random()*360},80%,60%)`;
+        c.style.left = Math.random()*100 + "%";
+        c.style.bottom = startY + "px"; // start halfway up
         document.body.appendChild(c);
+
+        // Random trajectory
+        const dx = (Math.random()-0.5)*200 + "px";
+        const dy = -Math.random()*200 - 100 + "px";
+        c.animate([
+            { transform: "translate(0,0)", opacity: 1 },
+            { transform: `translate(${dx},${dy}) rotate(${Math.random()*360}deg)`, opacity: 0 }
+        ], { duration: 1800, easing: "ease-out" });
+
         setTimeout(() => c.remove(), 1800);
+
+        // Spark trail
+        if (Math.random() < 0.5) {
+            const s = document.createElement("div");
+            s.className = "spark";
+            s.style.left = c.offsetLeft + "px";
+            s.style.bottom = startY + "px"; // same starting point as confetti
+            s.style.setProperty("--dx", dx);
+            s.style.setProperty("--dy", dy);
+            document.body.appendChild(s);
+            setTimeout(() => s.remove(), 800);
+        }
     }
 }
 
