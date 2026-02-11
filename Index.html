@@ -2,176 +2,211 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Blow Out the Candles</title>
+<title>Magical Candle Cake</title>
 <style>
     body {
         margin: 0;
         padding-top: 40px;
-        font-family: "Trebuchet MS", sans-serif;
-        background: linear-gradient(#2b1055, #140a2b);
-        color: white;
+        font-family: "Georgia", serif;
+        background: radial-gradient(circle at top, #1b0f2e, #06010f);
+        color: #f8eaff;
         text-align: center;
+        overflow-x: hidden;
     }
 
     h1 {
-        margin-bottom: 8px;
+        margin-bottom: 6px;
+        text-shadow: 0 0 12px #c77dff;
     }
 
-    /* ===== Cake ===== */
+    p {
+        opacity: 0.85;
+    }
+
+    /* ===== Magical Cake ===== */
     #cake {
         position: relative;
-        width: 420px;
-        height: 220px;
-        margin: 40px auto 0;
-        background: linear-gradient(#ffb347, #ff8c42);
-        border-radius: 25px;
+        width: 380px;
+        height: 200px;
+        margin: 70px auto 0;
+        border-radius: 50% / 18%;
+        background:
+            radial-gradient(circle at top, #5a2a82, #2a1246 70%);
         box-shadow:
-            inset 0 12px rgba(255,255,255,0.25),
-            inset 0 -18px rgba(0,0,0,0.25),
-            0 25px 40px rgba(0,0,0,0.6);
-        overflow: hidden;
+            0 0 40px #9b5cff,
+            0 0 80px rgba(155,92,255,0.4);
+        animation: float 4s ease-in-out infinite;
+        overflow: visible;
     }
 
-    /* Frosting top */
+    @keyframes float {
+        0% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0); }
+    }
+
+    /* Top magic frosting */
     #cake::before {
         content: "";
         position: absolute;
-        top: 0;
+        top: -25px;
         left: 0;
         width: 100%;
-        height: 55px;
-        background: linear-gradient(#fff, #ffe6f2);
-        border-radius: 25px 25px 12px 12px;
+        height: 60px;
+        border-radius: 50%;
+        background:
+            radial-gradient(circle at center, #d6b3ff, #7a3fbf 70%);
+        box-shadow:
+            inset 0 0 20px rgba(255,255,255,0.4),
+            0 0 30px #c77dff;
     }
 
-    /* Frosting drips */
+    /* Rune band */
     #cake::after {
-        content: "";
+        content: "✧ ✦ ✧ ✦ ✧ ✦ ✧";
         position: absolute;
-        top: 45px;
+        bottom: 35px;
         width: 100%;
-        height: 45px;
-        background:
-            radial-gradient(circle at 8% 0, #ffe6f2 20px, transparent 21px),
-            radial-gradient(circle at 28% 0, #ffe6f2 28px, transparent 29px),
-            radial-gradient(circle at 52% 0, #ffe6f2 18px, transparent 19px),
-            radial-gradient(circle at 75% 0, #ffe6f2 25px, transparent 26px),
-            radial-gradient(circle at 92% 0, #ffe6f2 20px, transparent 21px);
+        text-align: center;
+        font-size: 20px;
+        letter-spacing: 8px;
+        color: #e6ccff;
+        opacity: 0.8;
+        text-shadow: 0 0 10px #c77dff;
     }
 
     /* ===== Candles ===== */
     .candles {
         position: absolute;
-        top: -22px;
+        top: -60px;
         width: 100%;
         display: flex;
         justify-content: center;
-        gap: 14px;
+        gap: 18px;
         z-index: 5;
     }
 
     .candle {
         position: relative;
-        width: 18px;
-        height: 72px;
-        background: linear-gradient(#ffffff, #ffd6e8);
-        border-radius: 9px;
-        box-shadow:
-            inset -2px 0 rgba(255,255,255,0.7),
-            inset 2px 0 rgba(0,0,0,0.15);
+        width: 14px;
+        height: 60px;
+        background: linear-gradient(#e0d7ff, #9b7dff);
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(180,140,255,0.8);
         cursor: pointer;
     }
 
-    .wick {
+    /* Crystal shine */
+    .candle::after {
+        content: "";
         position: absolute;
-        top: -4px;
-        left: 50%;
-        width: 2px;
-        height: 6px;
-        background: #333;
-        transform: translateX(-50%);
+        left: 3px;
+        top: 5px;
+        width: 3px;
+        height: 50px;
+        background: rgba(255,255,255,0.4);
+        border-radius: 2px;
     }
 
     .flame {
         position: absolute;
         bottom: 100%;
         left: 50%;
-        width: 16px;
-        height: 24px;
+        width: 20px;
+        height: 28px;
         transform: translateX(-50%);
-        background: radial-gradient(circle at bottom, #fff176, #ff9800, #ff5722);
+        background:
+            radial-gradient(circle at center, #ffffff, #9bf6ff, #5f00ff);
         border-radius: 50%;
-        filter: drop-shadow(0 0 12px orange);
-        animation: sway 0.15s infinite alternate;
+        filter: blur(0.2px);
+        box-shadow:
+            0 0 20px #9bf6ff,
+            0 0 40px #5f00ff;
+        animation: pulse 0.25s infinite alternate;
     }
 
-    @keyframes sway {
-        from { transform: translateX(-50%) rotate(-2deg) scale(1); }
-        to   { transform: translateX(-50%) rotate(2deg) scale(1.1); }
+    @keyframes pulse {
+        from { transform: translateX(-50%) scale(1); }
+        to { transform: translateX(-50%) scale(1.15); }
     }
 
     .smoke {
         position: absolute;
         bottom: 100%;
         left: 50%;
-        width: 20px;
-        height: 20px;
-        background: rgba(220,220,220,0.6);
+        width: 22px;
+        height: 22px;
+        background: rgba(200,180,255,0.6);
         border-radius: 50%;
         transform: translateX(-50%);
-        animation: smoke 1.5s forwards;
+        animation: smoke 1.6s forwards;
     }
 
     @keyframes smoke {
-        from { opacity: 1; transform: translateX(-50%) scale(0.6); }
-        to   { opacity: 0; transform: translateX(-50%) translateY(-45px) scale(1.5); }
+        from { opacity: 1; transform: translateX(-50%) scale(0.5); }
+        to { opacity: 0; transform: translateX(-50%) translateY(-50px) scale(1.6); }
     }
 
     .out .flame { display: none; }
 
-    /* Plate */
-    #plate {
-        width: 480px;
-        height: 28px;
-        background: linear-gradient(#f5f5f5, #ccc);
+    /* Floating sparkles */
+    .sparkle {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background: #e6ccff;
         border-radius: 50%;
-        margin: 12px auto;
-        box-shadow: 0 12px 20px rgba(0,0,0,0.6);
+        box-shadow: 0 0 10px #c77dff;
+        animation: sparkle 5s linear infinite;
+        opacity: 0.8;
+    }
+
+    @keyframes sparkle {
+        from { transform: translateY(0) scale(0.5); opacity: 0; }
+        20% { opacity: 1; }
+        to { transform: translateY(-200px) scale(1.2); opacity: 0; }
     }
 
     #message {
-        margin-top: 18px;
-        font-size: 24px;
+        margin-top: 24px;
+        font-size: 26px;
+        text-shadow: 0 0 15px #c77dff;
     }
 </style>
 </head>
 <body>
 
-<h1>🎂 Blow Out the Candles</h1>
-<p>Click the candles to make a wish ✨</p>
+<h1>✨ Enchanted Candle Cake ✨</h1>
+<p>Click the glowing candles and make a wish</p>
 
 <div id="cake">
     <div class="candles" id="candles"></div>
 </div>
-<div id="plate"></div>
 
 <div id="message"></div>
 
 <script>
-const candleCount = 7;
+const candleCount = 6;
 const holder = document.getElementById("candles");
 const message = document.getElementById("message");
 
 for (let i = 0; i < candleCount; i++) {
     const candle = document.createElement("div");
     candle.className = "candle";
-    candle.innerHTML = `
-        <div class="wick"></div>
-        <div class="flame"></div>
-    `;
+    candle.innerHTML = `<div class="flame"></div>`;
     holder.appendChild(candle);
 
     candle.addEventListener("click", () => blowOut(candle));
+}
+
+/* Sparkles */
+for (let i = 0; i < 20; i++) {
+    const s = document.createElement("div");
+    s.className = "sparkle";
+    s.style.left = Math.random() * 100 + "%";
+    s.style.bottom = "0";
+    s.style.animationDelay = Math.random() * 5 + "s";
+    document.body.appendChild(s);
 }
 
 function blowOut(candle) {
@@ -181,7 +216,7 @@ function blowOut(candle) {
     const smoke = document.createElement("div");
     smoke.className = "smoke";
     candle.appendChild(smoke);
-    setTimeout(() => smoke.remove(), 1500);
+    setTimeout(() => smoke.remove(), 1600);
 
     checkWin();
 }
@@ -189,7 +224,7 @@ function blowOut(candle) {
 function checkWin() {
     const candles = document.querySelectorAll(".candle");
     if ([...candles].every(c => c.classList.contains("out"))) {
-        message.textContent = "🎉 Wish granted! Happy Birthday! 🎉";
+        message.textContent = "🌟 Your wish has been sealed by magic 🌟";
     }
 }
 </script>
