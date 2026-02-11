@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Birthday Totem – Swipe Wind</title>
+<title>Birthday Totem – Big Confetti</title>
 <style>
 body {
     margin: 0;
@@ -85,17 +85,12 @@ p {
     background: #ffbe0b;
     border-radius: 50%;
     animation: pulse 0.3s infinite alternate;
-    transition: transform 0.2s, opacity 0.2s;
+    transition: opacity 0.2s;
 }
 
 @keyframes pulse {
     from { transform: translateX(-50%) scale(1); }
     to   { transform: translateX(-50%) scale(1.25); }
-}
-
-.weak .flame {
-    transform: translateX(-50%) scale(0.6);
-    opacity: 0.6;
 }
 
 .out .flame {
@@ -106,14 +101,19 @@ p {
 /* Confetti */
 .confetti {
     position: absolute;
-    width: 6px;
-    height: 10px;
-    animation: confetti 1.6s forwards;
+    width: 8px;
+    height: 12px;
+    border-radius: 50%;
+    opacity: 1;
+    animation: confetti 1.8s forwards;
 }
 
 @keyframes confetti {
-    from { opacity: 1; transform: translateY(0) rotate(0); }
-    to   { opacity: 0; transform: translateY(-160px) rotate(360deg); }
+    0% { transform: translate(0,0) rotate(0deg); opacity: 1; }
+    25% { transform: translate(-15px,-40px) rotate(90deg); }
+    50% { transform: translate(20px,-80px) rotate(180deg); }
+    75% { transform: translate(-25px,-120px) rotate(270deg); }
+    100% { transform: translate(15px,-160px) rotate(360deg); opacity: 0; }
 }
 
 #message {
@@ -134,7 +134,9 @@ p {
 <body>
 
 <h1>BIRTHDAY TOTEM</h1>
-<p>Swipe to blow — flames follow your wind!</p>
+<p>Tap a candle to blow it out 🎂</p>
+    
+<div id="message">🎉 Another year unlocked 🎉</div>
 
 <div id="totem">
     <div class="candles" id="candles"></div>
@@ -143,7 +145,7 @@ p {
     <div class="layer bottom"></div>
 </div>
 
-<div id="message">🎉 Another year unlocked 🎉</div>
+
 
 <script>
 const candleCount = 6;
@@ -151,63 +153,22 @@ const holder = document.getElementById("candles");
 const layers = document.querySelectorAll(".layer");
 const message = document.getElementById("message");
 
-let startX = null;
-let startY = null;
-
 for (let i = 0; i < candleCount; i++) {
     const candle = document.createElement("div");
     candle.className = "candle";
     candle.innerHTML = `<div class="flame"></div>`;
     holder.appendChild(candle);
 
-    // Tap or touch end logic
-    candle.addEventListener("touchstart", e => {
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-    });
-
-    candle.addEventListener("touchend", e => {
-        const endX = e.changedTouches[0].clientX;
-        const endY = e.changedTouches[0].clientY;
-        const dx = endX - startX;
-        const dy = endY - startY;
-
-        const flame = candle.querySelector(".flame");
-
-        // Determine swipe direction
-        if (Math.abs(dy) > Math.abs(dx)) {
-            // vertical swipe
-            flame.style.transform = `translateX(-50%) rotate(${dy < 0 ? -20 : 20}deg)`;
-            if (dy < -20) blowOut(candle); // upward swipe
-        } else {
-            // horizontal swipe
-            flame.style.transform = `translateX(-50%) rotate(${dx > 0 ? 15 : -15}deg)`;
-        }
-
-        // Reset flame lean after short delay
-        setTimeout(() => {
-            if (!candle.classList.contains("out")) flame.style.transform = "translateX(-50%)";
-        }, 300);
-
-        startX = startY = null;
-    });
-
     candle.addEventListener("click", () => blowOut(candle));
+    candle.addEventListener("touchend", () => blowOut(candle));
 }
 
 function blowOut(candle) {
     if (candle.classList.contains("out")) return;
 
-    if (!candle.classList.contains("weak")) {
-        candle.classList.add("weak");
-        bounceCake();
-        return;
-    }
-
-    candle.classList.remove("weak");
     candle.classList.add("out");
     bounceCake();
-    burstConfetti(12);
+    burstConfetti(15);
     checkWin();
 }
 
@@ -223,17 +184,18 @@ function burstConfetti(amount) {
         const c = document.createElement("div");
         c.className = "confetti";
         c.style.left = Math.random() * 100 + "%";
-        c.style.bottom = "120px";
         c.style.background = `hsl(${Math.random() * 360}, 80%, 60%)`;
+        c.style.width = (6 + Math.random()*6) + "px";
+        c.style.height = (8 + Math.random()*8) + "px";
         document.body.appendChild(c);
-        setTimeout(() => c.remove(), 1600);
+        setTimeout(() => c.remove(), 1800);
     }
 }
 
 function checkWin() {
     const candles = document.querySelectorAll(".candle");
     if ([...candles].every(c => c.classList.contains("out"))) {
-        burstConfetti(50);
+        burstConfetti(60);
         message.classList.add("show");
     }
 }
@@ -241,4 +203,3 @@ function checkWin() {
 
 </body>
 </html>
-
