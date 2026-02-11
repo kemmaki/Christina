@@ -3,138 +3,138 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Birthday Totem</title>
+<title>Birthday Totem – Swipe Wind</title>
 <style>
-    body {
-        margin: 0;
-        height: 100vh;
-        background: linear-gradient(180deg, #0f1020, #1f2340);
-        font-family: system-ui, sans-serif;
-        color: #ffffff;
-        text-align: center;
-        overflow: hidden;
-        touch-action: manipulation;
-    }
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(180deg, #0f1020, #1f2340);
+    font-family: system-ui, sans-serif;
+    color: #ffffff;
+    text-align: center;
+    overflow: hidden;
+    touch-action: manipulation;
+}
 
-    h1 {
-        margin-top: 20px;
-        font-weight: 600;
-        letter-spacing: 2px;
-        font-size: 20px;
-    }
+h1 {
+    margin-top: 20px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    font-size: 20px;
+}
 
-    p {
-        font-size: 13px;
-        opacity: 0.75;
-        margin-bottom: 20px;
-    }
+p {
+    font-size: 13px;
+    opacity: 0.75;
+    margin-bottom: 20px;
+}
 
-    /* ===== Totem Cake ===== */
-    #totem {
-        position: absolute;
-        left: 50%;
-        bottom: 90px;
-        transform: translateX(-50%);
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        width: 90vw;
-        max-width: 340px;
-    }
+/* Cake Totem */
+#totem {
+    position: absolute;
+    left: 50%;
+    bottom: 90px;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 90vw;
+    max-width: 340px;
+}
 
-    .layer {
-        width: 100%;
-        height: 44px;
-        border-radius: 12px;
-        box-shadow: 0 16px 26px rgba(0,0,0,0.6);
-        transition: transform 0.25s ease;
-    }
+.layer {
+    width: 100%;
+    height: 44px;
+    border-radius: 12px;
+    box-shadow: 0 16px 26px rgba(0,0,0,0.6);
+    transition: transform 0.25s ease;
+}
 
-    .layer.top    { background: #ff5f7e; }
-    .layer.mid    { background: #ffd166; }
-    .layer.bottom { background: #4dd6a5; }
+.layer.top    { background: #ff5f7e; }
+.layer.mid    { background: #ffd166; }
+.layer.bottom { background: #4dd6a5; }
 
-    .bounce {
-        transform: translateY(6px);
-    }
+.bounce {
+    transform: translateY(6px);
+}
 
-    /* ===== Candles ===== */
-    .candles {
-        display: flex;
-        justify-content: space-evenly;
-        gap: 14px;
-        margin-bottom: 6px;
-    }
+/* Candles */
+.candles {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 14px;
+    margin-bottom: 6px;
+}
 
-    .candle {
-        position: relative;
-        width: 18px;
-        height: 56px;
-        background: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 0 0 2px #ff5f7e;
-    }
+.candle {
+    position: relative;
+    width: 18px;
+    height: 56px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 0 2px #ff5f7e;
+}
 
-    .flame {
-        position: absolute;
-        bottom: 100%;
-        left: 50%;
-        width: 16px;
-        height: 20px;
-        transform: translateX(-50%);
-        background: #ffbe0b;
-        border-radius: 50%;
-        animation: pulse 0.3s infinite alternate;
-        transition: transform 0.2s, opacity 0.2s;
-    }
+.flame {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    width: 16px;
+    height: 20px;
+    transform: translateX(-50%);
+    background: #ffbe0b;
+    border-radius: 50%;
+    animation: pulse 0.3s infinite alternate;
+    transition: transform 0.2s, opacity 0.2s;
+}
 
-    @keyframes pulse {
-        from { transform: translateX(-50%) scale(1); }
-        to   { transform: translateX(-50%) scale(1.25); }
-    }
+@keyframes pulse {
+    from { transform: translateX(-50%) scale(1); }
+    to   { transform: translateX(-50%) scale(1.25); }
+}
 
-    .weak .flame {
-        transform: translateX(-50%) scale(0.6);
-        opacity: 0.6;
-    }
+.weak .flame {
+    transform: translateX(-50%) scale(0.6);
+    opacity: 0.6;
+}
 
-    .out .flame {
-        opacity: 0;
-        animation: none;
-    }
+.out .flame {
+    opacity: 0;
+    animation: none;
+}
 
-    /* Confetti */
-    .confetti {
-        position: absolute;
-        width: 6px;
-        height: 10px;
-        animation: confetti 1.6s forwards;
-    }
+/* Confetti */
+.confetti {
+    position: absolute;
+    width: 6px;
+    height: 10px;
+    animation: confetti 1.6s forwards;
+}
 
-    @keyframes confetti {
-        from { opacity: 1; transform: translateY(0) rotate(0); }
-        to   { opacity: 0; transform: translateY(-160px) rotate(360deg); }
-    }
+@keyframes confetti {
+    from { opacity: 1; transform: translateY(0) rotate(0); }
+    to   { opacity: 0; transform: translateY(-160px) rotate(360deg); }
+}
 
-    #message {
-        position: absolute;
-        bottom: 30px;
-        width: 100%;
-        font-size: 20px;
-        letter-spacing: 2px;
-        opacity: 0;
-        transition: opacity 1s;
-    }
+#message {
+    position: absolute;
+    bottom: 30px;
+    width: 100%;
+    font-size: 20px;
+    letter-spacing: 2px;
+    opacity: 0;
+    transition: opacity 1s;
+}
 
-    #message.show {
-        opacity: 1;
-    }
+#message.show {
+    opacity: 1;
+}
 </style>
 </head>
 <body>
 
 <h1>BIRTHDAY TOTEM</h1>
-<p>Tap or swipe upward to blow 🎂</p>
+<p>Swipe to blow — flames follow your wind!</p>
 
 <div id="totem">
     <div class="candles" id="candles"></div>
@@ -151,6 +151,7 @@ const holder = document.getElementById("candles");
 const layers = document.querySelectorAll(".layer");
 const message = document.getElementById("message");
 
+let startX = null;
 let startY = null;
 
 for (let i = 0; i < candleCount; i++) {
@@ -159,14 +160,36 @@ for (let i = 0; i < candleCount; i++) {
     candle.innerHTML = `<div class="flame"></div>`;
     holder.appendChild(candle);
 
+    // Tap or touch end logic
     candle.addEventListener("touchstart", e => {
+        startX = e.touches[0].clientX;
         startY = e.touches[0].clientY;
     });
 
     candle.addEventListener("touchend", e => {
+        const endX = e.changedTouches[0].clientX;
         const endY = e.changedTouches[0].clientY;
-        if (startY - endY > 20) blowOut(candle);
-        startY = null;
+        const dx = endX - startX;
+        const dy = endY - startY;
+
+        const flame = candle.querySelector(".flame");
+
+        // Determine swipe direction
+        if (Math.abs(dy) > Math.abs(dx)) {
+            // vertical swipe
+            flame.style.transform = `translateX(-50%) rotate(${dy < 0 ? -20 : 20}deg)`;
+            if (dy < -20) blowOut(candle); // upward swipe
+        } else {
+            // horizontal swipe
+            flame.style.transform = `translateX(-50%) rotate(${dx > 0 ? 15 : -15}deg)`;
+        }
+
+        // Reset flame lean after short delay
+        setTimeout(() => {
+            if (!candle.classList.contains("out")) flame.style.transform = "translateX(-50%)";
+        }, 300);
+
+        startX = startY = null;
     });
 
     candle.addEventListener("click", () => blowOut(candle));
@@ -184,7 +207,7 @@ function blowOut(candle) {
     candle.classList.remove("weak");
     candle.classList.add("out");
     bounceCake();
-    burstConfetti(10);
+    burstConfetti(12);
     checkWin();
 }
 
